@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hackathon Judging Strategy"
+  short_description: "Align projects to judging criteria"
+  default_prompt: "Use $hackathon-judging-strategy to optimize this project for the judging rubric."

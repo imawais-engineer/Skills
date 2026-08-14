@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hackathon Demo Pitch"
+  short_description: "Shape demo story for judges"
+  default_prompt: "Use $hackathon-demo-pitch to create a judging-focused demo and pitch."

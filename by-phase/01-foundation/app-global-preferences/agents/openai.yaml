@@ -1,0 +1,4 @@
+interface:
+  display_name: "App Global Preferences"
+  short_description: "Personal defaults for AI-built apps"
+  default_prompt: "Use $app-global-preferences to apply my default app development preferences."

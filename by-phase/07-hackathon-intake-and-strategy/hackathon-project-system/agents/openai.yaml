@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hackathon Project System"
+  short_description: "Build projects from competition briefs"
+  default_prompt: "Use $hackathon-project-system to turn this hackathon brief into a project plan."

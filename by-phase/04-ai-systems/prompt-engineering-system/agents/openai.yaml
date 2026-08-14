@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prompt Engineering System"
+  short_description: "Design prompts as app components"
+  default_prompt: "Use $prompt-engineering-system to design robust prompts for this application."

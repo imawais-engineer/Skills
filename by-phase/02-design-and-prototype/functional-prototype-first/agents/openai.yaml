@@ -1,0 +1,4 @@
+interface:
+  display_name: "Functional Prototype First"
+  short_description: "Build core workflow before hardening"
+  default_prompt: "Use $functional-prototype-first to implement the core application flow before hardening."

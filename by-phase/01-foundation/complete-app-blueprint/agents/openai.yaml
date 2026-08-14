@@ -1,0 +1,4 @@
+interface:
+  display_name: "Complete App Blueprint"
+  short_description: "Map full app scope before coding"
+  default_prompt: "Use $complete-app-blueprint to expand this app idea into a complete build scope."

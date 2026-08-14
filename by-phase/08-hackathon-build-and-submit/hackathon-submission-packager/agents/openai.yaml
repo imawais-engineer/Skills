@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hackathon Submission Packager"
+  short_description: "Prepare required submission assets"
+  default_prompt: "Use $hackathon-submission-packager to package this project for submission."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI App Builder"
+  short_description: "Build complete AI-first applications"
+  default_prompt: "Use $ai-app-builder to plan and build this AI application end to end."

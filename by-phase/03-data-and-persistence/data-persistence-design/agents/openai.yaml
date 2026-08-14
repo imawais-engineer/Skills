@@ -1,0 +1,4 @@
+interface:
+  display_name: "Data Persistence Design"
+  short_description: "Schema, seed, migration, index rules"
+  default_prompt: "Use $data-persistence-design to plan database storage for this application."

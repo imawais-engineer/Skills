@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hackathon Brief Analyzer"
+  short_description: "Extract requirements from briefs"
+  default_prompt: "Use $hackathon-brief-analyzer to parse this hackathon brief."

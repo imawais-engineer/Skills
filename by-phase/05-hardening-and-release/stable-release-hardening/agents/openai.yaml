@@ -1,0 +1,4 @@
+interface:
+  display_name: "Stable Release Hardening"
+  short_description: "Testing, auth, security, and V&V"
+  default_prompt: "Use $stable-release-hardening to prepare this working prototype for stable release."

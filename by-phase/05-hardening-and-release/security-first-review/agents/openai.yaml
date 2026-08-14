@@ -1,0 +1,4 @@
+interface:
+  display_name: "Security First Review"
+  short_description: "Review apps for security gaps"
+  default_prompt: "Use $security-first-review to review this application for security gaps."

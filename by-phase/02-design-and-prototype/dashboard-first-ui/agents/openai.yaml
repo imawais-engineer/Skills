@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dashboard First UI"
+  short_description: "Dark dashboard-first UI standards"
+  default_prompt: "Use $dashboard-first-ui to design this app with my dashboard-first UI preferences."

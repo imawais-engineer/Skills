@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hackathon Build Roadmap"
+  short_description: "Create timeboxed build plans"
+  default_prompt: "Use $hackathon-build-roadmap to create a timeboxed build roadmap for this hackathon project."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deploy and Document"
+  short_description: "VPS or Vercel release documentation"
+  default_prompt: "Use $deploy-and-document to prepare deployment and documentation for this app."
