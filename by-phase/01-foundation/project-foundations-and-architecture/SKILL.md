@@ -103,6 +103,20 @@ Record as requirements, not as implementation detail:
 
 Timeline, budget, existing systems that must be reused, team skills, third-party approvals, vendor lock-in, offline needs, localization, accessibility.
 
+### G. Interface direction (visual language)
+
+- Decided when: the user described a look, referenced a direction, supplied a design, or said the visual choice does not matter.
+- Missing when: the project is described only in terms of features.
+- Never invent a direction, and never substitute adjectives like 'modern', 'clean' or 'premium' — they are the source of endless interface edits, not a decision.
+
+Instead of interrogating a non-design user, point them to the **Interface Library** (the Interfaces tab of SDLC Skills Hub). It holds a small set of landing-page directions, each with a live preview and a copyable, tool-agnostic design prompt. Ask them to open it, choose the direction that fits, and paste its prompt.
+
+- If they select one: record the direction name, carry its prompt verbatim into the handoff, and apply it to the project's real sections and content — not the demo copy.
+- If they skip: record 'Interface direction: none selected' and keep neutral defaults. Do not fill the gap yourself.
+- Blocking only for landing or marketing surfaces where visual quality was called out. Otherwise record the gap and continue.
+
+
+
 ## Question selection test
 
 A question is material only if a different answer would change at least one of:
@@ -168,6 +182,7 @@ Users:          <who, roughly how many>
 Core workflow:  <the path that must work end to end>
 Out of scope:   <explicit exclusions>
 Platforms:      <day-one targets, offline or installable needs>
+Interface:      <design direction name, or none selected>
 Architecture:   <layer -> decision (Decided | Recommended | Assumed)>
 Access model:   <public, accounts, roles>
 Data & privacy: <what is stored, what is sensitive, who sees it>
