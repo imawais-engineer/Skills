@@ -109,7 +109,7 @@ Timeline, budget, existing systems that must be reused, team skills, third-party
 - Missing when: the project is described only in terms of features.
 - Never invent a direction, and never substitute adjectives like 'modern', 'clean' or 'premium' — they are the source of endless interface edits, not a decision.
 
-Instead of interrogating a non-design user, point them to the **Interface Library** (the Interfaces tab of SDLC Skills Hub). It holds a small set of landing-page directions, each with a live preview and a copyable, tool-agnostic design prompt. Ask them to open it, choose the direction that fits, and paste its prompt.
+Instead of interrogating a non-design user, point them to the **Interface Library** (the Interfaces tab of SDLC Skills Hub). It holds ten real-world landing-page directions across industries, each with a live preview and a copyable, tool-agnostic design prompt. Ask them to open it, choose the direction that fits, and paste its prompt.
 
 - If they select one: record the direction name, carry its prompt verbatim into the handoff, and apply it to the project's real sections and content — not the demo copy.
 - If they skip: record 'Interface direction: none selected' and keep neutral defaults. Do not fill the gap yourself.
