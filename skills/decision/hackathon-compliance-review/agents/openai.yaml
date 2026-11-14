@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hackathon Compliance Review"
+  short_description: "Check rules and requirements"
+  default_prompt: "Use $hackathon-compliance-review to check this hackathon project against the rules."

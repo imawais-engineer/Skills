@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hackathon Resource Planner"
+  short_description: "Map tools and technologies to scope"
+  default_prompt: "Use $hackathon-resource-planner to choose tools and architecture for this competition."
