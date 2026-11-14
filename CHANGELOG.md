@@ -2,30 +2,39 @@
 
 ## Unreleased (v2.0.0 proposed)
 
-Proposed release: **v2.0.0**. The skill library now has one tree, `by-phase/`, ordered by [TREE.md](TREE.md). No tag and no GitHub release are part of this change.
+Proposed release: **v2.0.0**. The professional library is `skills/`, with unnumbered phase folders and a priority order read from each skill. No tag and no GitHub release are part of this change. `main` is not updated here.
 
 ### Added
 
-- `TREE.md` records the priority order 1–22 and the app, AI app, and hackathon sequences.
-- `scripts/validate_skills.py` checks frontmatter, folder names, duplicate names, priority order, referenced paths, and relative links.
+- `TREE.md` records the 14-skill professional order and why each skill sits where it does.
+- `scripts/validate_skills.py` checks frontmatter, folder names, duplicate names, that order, referenced paths, and relative links.
+- `CHANGELOG.md`.
 
 ### Changed
 
-- Eleven skills now use the compiled SDLC Skills Hub text: `sdlc-best-practices`, `app-global-preferences`, `project-foundations-and-architecture`, `complete-app-blueprint`, `dashboard-first-ui`, `functional-prototype-first`, `data-persistence-design`, `stable-release-hardening`, `security-first-review`, `encapsulation-backend-config`, and `deploy-and-document`.
-- Those files share the hub section order (purpose, when to use, inputs, procedure, deliverables, acceptance, verification, failure modes, prompt template, SRS traceability, definition of done). Their YAML `description` is the generic hub line, with `source` and `priority`. The specific trigger sentence remains in the body.
-- `GLOBAL_SKILL_ROUTER.md` follows that same 1–22 order. Repo-relative paths replace `/home/awais/Skills/...`. `sdlc-best-practices` and `project-foundations-and-architecture` are in the router. The standard sequences are unchanged from [TREE.md](TREE.md).
-- `README.md` documents the phase tree, the order of use, and how to read or symlink a skill.
+- Fourteen product skills now live under `skills/foundational`, `skills/design-and-prototype`, `skills/data-and-persistence`, `skills/ai-systems`, `skills/hardening-and-release`, and `skills/deployment-and-documentation`. The moves were `git mv`.
+- Eleven of those skills use the compiled SDLC Skills Hub text. Their YAML `description` is the generic hub line. The specific trigger sentence remains in the body. The three AI skills were already identical to the package and were only moved.
+- Priority inside `foundational` is `sdlc-best-practices`, then `project-foundations-and-architecture`, then `app-global-preferences`, then `complete-app-blueprint`. Preferences cannot precede foundations: SK-04 requires the Foundations Record and the SRS.
+- Priority inside `hardening-and-release` is `encapsulation-backend-config`, then `security-first-review`, then `stable-release-hardening`. The release skill requires the security findings, and the review applies the encapsulation skill.
+- `GLOBAL_SKILL_ROUTER.md` and `README.md` follow this tree, this order, and the install path `skills/<phase>/<skill>`.
 
-### Removed
+### Removed from this branch
 
-- `by-use-case/` . It was a symlink index of the same skills, and it is not part of the TREE arrangement. No skill lived only there, so nothing was moved to `by-phase/99-unsorted/`.
+Eight hackathon skills. They were not deleted from git. They remain on `cursor/hackathon-skills-beaf`:
 
-### Unchanged
+- `hackathon-project-system`
+- `hackathon-brief-analyzer`
+- `hackathon-judging-strategy`
+- `hackathon-resource-planner`
+- `hackathon-build-roadmap`
+- `hackathon-compliance-review`
+- `hackathon-demo-pitch`
+- `hackathon-submission-packager`
 
-- `ai-app-builder`, `prompt-engineering-system`, `agent-workflow-design`, and all eight hackathon skills already matched the compiled package, including `agents/openai.yaml`.
-- Existing `agents/openai.yaml` files on non-package-shaped skills were kept. The compiled folders for those skills shipped `SKILL.md` only, and TREE says the agent file is included when it is present.
-- `.github/workflows/security-scan.yml`, `SECURITY.md`, and `.gitignore`.
+`by-use-case/` was removed earlier. It was a symlink index, not a second set of skills. Nothing was moved to `skills/unsorted/`.
 
-### Not a move
+### Unchanged skill text
 
-Every skill was already stored at its `by-phase/` path. This revamp does not `git mv` any skill. The old path and the new path are the same file.
+- `ai-app-builder`, `prompt-engineering-system`, and `agent-workflow-design`, including `agents/openai.yaml`.
+- Existing `agents/openai.yaml` files on skills whose compiled folder shipped `SKILL.md` only.
+- `.github/workflows/security-scan.yml` and `SECURITY.md`.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the canonical by-phase skill tree.
+"""Validate the canonical skills/ tree.
 
 Stdlib only. Checks:
 - every SKILL.md has YAML frontmatter with name and description
@@ -19,46 +19,38 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-# Priority tree. Phase order is the order of use.
+# Priority was read from each skill's required inputs, not from folder numbers.
 PRIORITY: list[tuple[int, str, str]] = [
-    (1, "sdlc-best-practices", "01-foundation"),
-    (2, "app-global-preferences", "01-foundation"),
-    (3, "project-foundations-and-architecture", "01-foundation"),
-    (4, "complete-app-blueprint", "01-foundation"),
-    (5, "dashboard-first-ui", "02-design-and-prototype"),
-    (6, "functional-prototype-first", "02-design-and-prototype"),
-    (7, "data-persistence-design", "03-data-and-persistence"),
-    (8, "ai-app-builder", "04-ai-systems"),
-    (9, "prompt-engineering-system", "04-ai-systems"),
-    (10, "agent-workflow-design", "04-ai-systems"),
-    (11, "stable-release-hardening", "05-hardening-and-release"),
-    (12, "security-first-review", "05-hardening-and-release"),
-    (13, "encapsulation-backend-config", "05-hardening-and-release"),
-    (14, "deploy-and-document", "06-deployment-and-documentation"),
-    (15, "hackathon-project-system", "07-hackathon-intake-and-strategy"),
-    (16, "hackathon-brief-analyzer", "07-hackathon-intake-and-strategy"),
-    (17, "hackathon-judging-strategy", "07-hackathon-intake-and-strategy"),
-    (18, "hackathon-resource-planner", "07-hackathon-intake-and-strategy"),
-    (19, "hackathon-build-roadmap", "08-hackathon-build-and-submit"),
-    (20, "hackathon-compliance-review", "08-hackathon-build-and-submit"),
-    (21, "hackathon-demo-pitch", "08-hackathon-build-and-submit"),
-    (22, "hackathon-submission-packager", "08-hackathon-build-and-submit"),
+    (1, "sdlc-best-practices", "foundational"),
+    (2, "project-foundations-and-architecture", "foundational"),
+    (3, "app-global-preferences", "foundational"),
+    (4, "complete-app-blueprint", "foundational"),
+    (5, "dashboard-first-ui", "design-and-prototype"),
+    (6, "functional-prototype-first", "design-and-prototype"),
+    (7, "data-persistence-design", "data-and-persistence"),
+    (8, "ai-app-builder", "ai-systems"),
+    (9, "prompt-engineering-system", "ai-systems"),
+    (10, "agent-workflow-design", "ai-systems"),
+    (11, "encapsulation-backend-config", "hardening-and-release"),
+    (12, "security-first-review", "hardening-and-release"),
+    (13, "stable-release-hardening", "hardening-and-release"),
+    (14, "deploy-and-document", "deployment-and-documentation"),
 ]
 
 PRIORITY_ROW = re.compile(
-    r"^\|\s*(\d+)\s*\|\s*`([^`]+)`\s*\|\s*`?([0-9]{2}-[a-z0-9-]+)`?\s*\|"
+    r"^\|\s*(\d+)\s*\|\s*`([^`]+)`\s*\|\s*`?([a-z0-9-]+)`?\s*\|"
 )
 FRONTMATTER = re.compile(r"\A---\r?\n(.*?)\r?\n---\r?\n", re.DOTALL)
 MD_LINK = re.compile(r"(?<!!)\[[^\]]*\]\(([^)]+)\)|!\[[^\]]*\]\(([^)]+)\)")
 FENCE = re.compile(r"```[^\n]*\n(.*?)```", re.DOTALL)
 CONCRETE_PATH = re.compile(
-    r"^(?:by-phase|scripts)(?:/[A-Za-z0-9_.-]+)*/?$|^(?:README|TREE|CHANGELOG|SECURITY|GLOBAL_SKILL_ROUTER)\.md$"
+    r"^(?:skills|scripts)(?:/[A-Za-z0-9_.-]+)*/?$|^(?:README|TREE|CHANGELOG|SECURITY|GLOBAL_SKILL_ROUTER)\.md$"
 )
-UNSORTED_PHASE = "99-unsorted"
+UNSORTED_PHASE = "unsorted"
 
 
 def skill_path(phase: str, name: str) -> Path:
-    return ROOT / "by-phase" / phase / name / "SKILL.md"
+    return ROOT / "skills" / phase / name / "SKILL.md"
 
 
 def parse_frontmatter(text: str) -> dict[str, str] | None:
@@ -144,9 +136,9 @@ def concrete_backtick_paths(text: str) -> list[str]:
 
 def check_frontmatter(errors: list[str]) -> dict[str, Path]:
     names: dict[str, Path] = {}
-    skill_files = sorted((ROOT / "by-phase").glob("*/*/SKILL.md"))
+    skill_files = sorted((ROOT / "skills").glob("*/*/SKILL.md"))
     if not skill_files:
-        errors.append("no SKILL.md files under by-phase/")
+        errors.append("no SKILL.md files under skills/")
         return names
     for path in skill_files:
         folder = path.parent.name
@@ -173,7 +165,7 @@ def check_frontmatter(errors: list[str]) -> dict[str, Path]:
         if phase != UNSORTED_PHASE:
             expected = next((item for item in PRIORITY if item[1] == folder), None)
             if expected is None:
-                errors.append(f"{rel}: skill is not in the priority tree; move it to by-phase/{UNSORTED_PHASE}/")
+                errors.append(f"{rel}: skill is not in the priority tree; move it to skills/{UNSORTED_PHASE}/")
             elif expected[2] != phase:
                 errors.append(f"{rel}: phase is {phase}, priority tree places it in {expected[2]}")
     return names
@@ -222,9 +214,9 @@ def check_referenced_paths(errors: list[str]) -> None:
                     errors.append(f"TREE.md tree: {rel} is not a directory")
                 if not is_dir and not target.is_file():
                     errors.append(f"TREE.md tree: {rel} is not a file")
-                parent = Path(rel).parent
-                if is_dir and re.fullmatch(r"\d{2}-[a-z0-9-]+", parent.name):
-                    skills_by_phase.setdefault(parent.name, []).append(Path(rel).name)
+                parts = Path(rel).parts
+                if is_dir and len(parts) == 3 and parts[0] == "skills" and parts[1] != UNSORTED_PHASE:
+                    skills_by_phase.setdefault(parts[1], []).append(parts[2])
             expected_by_phase: dict[str, list[str]] = {}
             for _, name, phase in PRIORITY:
                 expected_by_phase.setdefault(phase, []).append(name)
@@ -297,7 +289,7 @@ def main() -> int:
             phases.append(phase)
     print("OK: skill tree matches the priority order")
     print(f"OK: {len(names)} SKILL.md files, names unique and equal to their folders")
-    print("OK: TREE.md and GLOBAL_SKILL_ROUTER.md priority tables match 1-22")
+    print(f"OK: TREE.md and GLOBAL_SKILL_ROUTER.md priority tables match 1-{len(PRIORITY)}")
     print("OK: referenced paths exist and relative links resolve")
     print("Order:")
     for number, name, phase in PRIORITY:

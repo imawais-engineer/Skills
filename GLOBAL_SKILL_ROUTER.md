@@ -1,120 +1,108 @@
 # Global Skill Router
 
-Use this file to choose the skill to read before planning, building, reviewing, or submitting. [TREE.md](TREE.md) is the priority index. The only skill library is [by-phase/](by-phase).
+Choose the skill to read before planning, building, or releasing. [TREE.md](TREE.md) is the priority index. The library is [skills/](skills).
 
-On a new product, start at priority 1. The standard sequences later in this file are the build order after that gate, and they match [TREE.md](TREE.md).
+This tree is the professional library. Hackathon skills are not in it. They are on branch `cursor/hackathon-skills-beaf`.
 
-## Priority Order
+Priority was read from each skill, one by one. Folder names are phases. They do not encode the order.
 
-| Priority | Skill | Phase | When to use |
+## Priority
+
+| Priority | Skill | Phase | Why this slot |
 | --- | --- | --- | --- |
-| 1 | `sdlc-best-practices` | 01-foundation | Gate skill. Forces full discovery discussion + complete SRS before any code. |
-| 2 | `app-global-preferences` | 01-foundation | Apply personal/global development preferences (stack, order, security, docs). |
-| 3 | `project-foundations-and-architecture` | 01-foundation | Lock platform, stack, access model, privacy baseline. |
-| 4 | `complete-app-blueprint` | 01-foundation | Expand idea into full software blueprint (pages, flows, roles, data, APIs). |
-| 5 | `dashboard-first-ui` | 02-design-and-prototype | Dashboard-first UI standards, layouts, navigation, themes. |
-| 6 | `functional-prototype-first` | 02-design-and-prototype | Build core functional app before auth, hardening, or secondary features. |
-| 7 | `data-persistence-design` | 03-data-and-persistence | Schema, storage, migrations, RLS, ownership rules. |
-| 8 | `ai-app-builder` | 04-ai-systems | AI-native application architecture. |
-| 9 | `prompt-engineering-system` | 04-ai-systems | Structured prompt engineering. |
-| 10 | `agent-workflow-design` | 04-ai-systems | Agent workflows (use only if agentic behavior needed). |
-| 11 | `stable-release-hardening` | 05-hardening-and-release | Testing, auth, authorization, quality gates after prototype works. |
-| 12 | `security-first-review` | 05-hardening-and-release | Security review before stable release. |
-| 13 | `encapsulation-backend-config` | 05-hardening-and-release | Hide secrets, env vars, backend details from UI/API. |
-| 14 | `deploy-and-document` | 06-deployment-and-documentation | VPS/Vercel deploy, DNS, SSL, README, release notes. |
-| 15 | `hackathon-project-system` | 07-hackathon-intake-and-strategy | Structure the hackathon project. |
-| 16 | `hackathon-brief-analyzer` | 07-hackathon-intake-and-strategy | Analyze brief, rules, constraints. |
-| 17 | `hackathon-judging-strategy` | 07-hackathon-intake-and-strategy | Align with judging criteria. |
-| 18 | `hackathon-resource-planner` | 07-hackathon-intake-and-strategy | Plan time, team, tools. |
-| 19 | `hackathon-build-roadmap` | 08-hackathon-build-and-submit | Implementation roadmap for competition. |
-| 20 | `hackathon-compliance-review` | 08-hackathon-build-and-submit | Verify rules compliance. |
-| 21 | `hackathon-demo-pitch` | 08-hackathon-build-and-submit | Demo flow, pitch narrative, judging evidence. |
-| 22 | `hackathon-submission-packager` | 08-hackathon-build-and-submit | Final submission package checklist. |
+| 1 | `sdlc-best-practices` | foundational | SK-01. Creates the requirement IDs every other skill cites. No code until the SRS is approved. |
+| 2 | `project-foundations-and-architecture` | foundational | SK-02. Needs discovery notes from SK-01. Confirmed record is written back into the SRS. No files before that confirmation. |
+| 3 | `app-global-preferences` | foundational | SK-04. Requires the Foundations Record and the SRS. Fills silence only. Precedence is user, then SRS and foundations, then these defaults. |
+| 4 | `complete-app-blueprint` | foundational | SK-03. Requires the confirmed Foundations Record and the SRS. Maps pages, entities, and capabilities before coding. |
+| 5 | `dashboard-first-ui` | design-and-prototype | SK-05. Requires the blueprint page table. Designs the product screen before implementation. |
+| 6 | `functional-prototype-first` | design-and-prototype | SK-06. First code. Requires the approved SRS and the blueprint. Mock data is allowed. Auth and hardening stay out of this pass. |
+| 7 | `data-persistence-design` | data-and-persistence | SK-07. Schema, ownership, and access rules before persistence code. Replaces the prototype's mock data before release. |
+| 8 | `ai-app-builder` | ai-systems | Use only when AI is the product. Defines the AI job after the normal workflow exists. |
+| 9 | `prompt-engineering-system` | ai-systems | Prompts are components of the job defined by `ai-app-builder`. |
+| 10 | `agent-workflow-design` | ai-systems | Use only when a deterministic workflow is not enough. |
+| 11 | `encapsulation-backend-config` | hardening-and-release | SK-11. Constrains public UI and APIs as they are built. The security review applies this skill. |
+| 12 | `security-first-review` | hardening-and-release | SK-12. After the prototype works, before release. Produces the findings the release gate requires. |
+| 13 | `stable-release-hardening` | hardening-and-release | SK-13. Requires a passing prototype and the security findings. Auth and the V&V gate live here. |
+| 14 | `deploy-and-document` | deployment-and-documentation | SK-14. Requires the V&V report. Last, unless the user asks for a labelled preview. |
 
-Canonical file for priority 1: `by-phase/01-foundation/sdlc-best-practices/SKILL.md`.
+Canonical gate file: `skills/foundational/sdlc-best-practices/SKILL.md`.
 
-## Fast Routing
+## How the order was decided
 
-| User request | Start with | Then add |
+- `sdlc-best-practices` is first because every other skill traces to the requirement IDs it creates, and it blocks code until the SRS is approved.
+- `project-foundations-and-architecture` is second, not third. It needs the discovery notes, and its confirmed record is an input to the rest of the SRS. The sketch listed preferences here. `app-global-preferences` cannot run yet: its required inputs are the Foundations Record and the SRS.
+- `app-global-preferences` is third. It is a tie-breaker with explicit precedence: user decision, then SRS and foundations, then defaults.
+- `complete-app-blueprint` is fourth. It refuses to map the product until both the record and the SRS exist.
+- `dashboard-first-ui` precedes `functional-prototype-first` because the prototype implements the page table and the screen rules.
+- `data-persistence-design` follows the prototype. The prototype may use mock data and a draft entity shape. This skill is the one that designs the store and removes that mock data before release.
+- The three AI skills stay behind the data skill and stay optional. `ai-app-builder` defines the job. `prompt-engineering-system` writes the prompts for that job. `agent-workflow-design` is last, and only when a fixed workflow is not enough.
+- Inside hardening, the old list put stable release first. The skills disagree. `stable-release-hardening` requires the security findings. `security-first-review` applies `encapsulation-backend-config`. Read encapsulation, then the review, then the release gate.
+- `deploy-and-document` is last. It refuses a build that has not passed the release gate, unless the user asks for a labelled preview.
+
+## Fast routing
+
+| Request | Start with | Then |
 | --- | --- | --- |
-| New product, vague idea, or "build an app" | `sdlc-best-practices` | `app-global-preferences`, `project-foundations-and-architecture`, `complete-app-blueprint` |
-| "Plan a full product" | `complete-app-blueprint` | `data-persistence-design`, `stable-release-hardening`, `deploy-and-document` |
-| "Make the UI/dashboard" | `dashboard-first-ui` | `functional-prototype-first` |
-| "Implement the prototype" | `functional-prototype-first` | `dashboard-first-ui`, `data-persistence-design` |
-| "Design database/storage" | `data-persistence-design` | `stable-release-hardening` when auth, RLS, or security is needed |
-| "Build an AI app" | `ai-app-builder` | `prompt-engineering-system`, `agent-workflow-design`, `security-first-review` |
-| "Design prompts" | `prompt-engineering-system` | `ai-app-builder` when prompts are part of a product |
-| "Design an agent workflow" | `agent-workflow-design` | `prompt-engineering-system`, `security-first-review` |
-| "Prepare for stable release" | `stable-release-hardening` | `security-first-review`, `deploy-and-document` |
-| "Review security" | `security-first-review` | `encapsulation-backend-config`, `stable-release-hardening` |
-| "Hide backend config from UI/API" | `encapsulation-backend-config` | `security-first-review` |
-| "Deploy/document" | `deploy-and-document` | `stable-release-hardening` |
-| "Build for a hackathon" | `hackathon-project-system` | The rest of the hackathon sequence |
-| "Parse hackathon brief" | `hackathon-brief-analyzer` | `hackathon-judging-strategy`, `hackathon-resource-planner` |
-| "Optimize for judging" | `hackathon-judging-strategy` | `hackathon-demo-pitch` |
-| "Create hackathon roadmap" | `hackathon-build-roadmap` | `hackathon-compliance-review` |
-| "Check hackathon rules" | `hackathon-compliance-review` | `hackathon-submission-packager` |
-| "Prepare pitch/demo" | `hackathon-demo-pitch` | `hackathon-submission-packager` |
-| "Prepare submission" | `hackathon-submission-packager` | `hackathon-compliance-review` |
+| New product or "build an app" | `sdlc-best-practices` | `project-foundations-and-architecture`, then `app-global-preferences`, then `complete-app-blueprint` |
+| Platform, stack, access, or privacy is unset | `project-foundations-and-architecture` | Finish the SRS in `sdlc-best-practices` |
+| A default is missing and the SRS is silent | `app-global-preferences` | Do not override a recorded decision |
+| Pages, roles, data, and APIs are still vague | `complete-app-blueprint` | `dashboard-first-ui` |
+| UI, layout, dashboard, tables, forms | `dashboard-first-ui` | `functional-prototype-first` |
+| First implementation | `functional-prototype-first` | `data-persistence-design` when mock data must become real |
+| Schema, migrations, RLS, ownership | `data-persistence-design` | `security-first-review` when access rules are the risk |
+| The product is an AI app | `ai-app-builder` | `prompt-engineering-system`, then `agent-workflow-design` only if needed |
+| Prompts or structured model output | `prompt-engineering-system` | `ai-app-builder` when the prompt is part of a product |
+| An agent, tools, or human approval | `agent-workflow-design` | `security-first-review` |
+| Public UI or API might show config or secrets | `encapsulation-backend-config` | `security-first-review` |
+| Review security before release | `security-first-review` | `stable-release-hardening` |
+| Prototype works and should become a release | `stable-release-hardening` | `deploy-and-document` |
+| Deploy, DNS, SSL, README, release notes | `deploy-and-document` | Only after `stable-release-hardening`, or label the deploy as a preview |
 
-AI skills are used only when AI is the product or the task explicitly needs them. Hackathon skills are used when a brief, rubric, rule set, or submission package is in play. A hackathon app also uses the relevant app and AI skills.
+## Product sequence
 
-## Standard App Sequence
-
-1. `app-global-preferences`
-2. `complete-app-blueprint`
-3. `dashboard-first-ui`
-4. `functional-prototype-first`
-5. `data-persistence-design`
-6. `stable-release-hardening`
-7. `security-first-review`
+1. `sdlc-best-practices`
+2. `project-foundations-and-architecture`
+3. `app-global-preferences`
+4. `complete-app-blueprint`
+5. `dashboard-first-ui`
+6. `functional-prototype-first`
+7. `data-persistence-design`
 8. `encapsulation-backend-config`
-9. `deploy-and-document`
+9. `security-first-review`
+10. `stable-release-hardening`
+11. `deploy-and-document`
 
-Run `sdlc-best-practices` and `project-foundations-and-architecture` before this sequence on a new product. They are priorities 1 and 3 in the table above.
+## AI product sequence
 
-## Standard AI App Sequence
-
-1. `app-global-preferences`
-2. `complete-app-blueprint`
-3. `ai-app-builder`
-4. `prompt-engineering-system`
-5. `agent-workflow-design` only if agentic behavior is required
-6. `data-persistence-design`
-7. `stable-release-hardening`
-8. `security-first-review`
-9. `encapsulation-backend-config`
-10. `deploy-and-document`
-
-## Standard Hackathon Sequence
-
-1. `hackathon-project-system`
-2. `hackathon-brief-analyzer`
-3. `hackathon-judging-strategy`
-4. `hackathon-resource-planner`
-5. `hackathon-build-roadmap`
-6. `hackathon-compliance-review`
-7. `hackathon-demo-pitch`
-8. `hackathon-submission-packager`
-
-If the hackathon project is an app, also use the relevant application skills. If it is AI-first, also use the AI skills.
+1. `sdlc-best-practices`
+2. `project-foundations-and-architecture`
+3. `app-global-preferences`
+4. `complete-app-blueprint`
+5. `dashboard-first-ui`
+6. `functional-prototype-first`
+7. `data-persistence-design`
+8. `ai-app-builder`
+9. `prompt-engineering-system`
+10. `agent-workflow-design` only if an agent is justified
+11. `encapsulation-backend-config`
+12. `security-first-review`
+13. `stable-release-hardening`
+14. `deploy-and-document`
 
 ## Install
 
-Skills stay in this repo. Point an agent at a skill by giving it the `SKILL.md` path, or symlink the skill folder into a flat skills directory:
+Skills stay in this repo. Give an agent the `SKILL.md` path, or symlink one folder into a flat skills directory outside the repo:
 
 ```bash
 mkdir -p "${HOME}/.codex/skills"
-ln -sfn "$(pwd)/by-phase/01-foundation/sdlc-best-practices" "${HOME}/.codex/skills/sdlc-best-practices"
+ln -sfn "$(pwd)/skills/foundational/sdlc-best-practices" "${HOME}/.codex/skills/sdlc-best-practices"
 ```
 
-That install path lives outside the repo. The copy inside the repo is `by-phase/01-foundation/sdlc-best-practices/SKILL.md`.
+The copy inside the repo is `skills/foundational/sdlc-best-practices/SKILL.md`.
 
 ## Maintenance
 
-When adding, renaming, or moving a skill:
-
-1. Put the canonical folder under `by-phase/` in lifecycle order.
-2. Add the skill to the priority table in [TREE.md](TREE.md) and in this file, in the same order.
-3. Keep `name` in the skill frontmatter equal to the folder name.
+1. Put the skill under `skills/` in the phase its inputs belong to.
+2. Add it to the priority table in [TREE.md](TREE.md) and in this file, in the order its inputs require.
+3. Keep `name` in the frontmatter equal to the folder name.
 4. Run `scripts/validate_skills.py`.
