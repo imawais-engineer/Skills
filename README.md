@@ -1,6 +1,11 @@
 # Skills
 
-Professional skill library for AI-assisted software work. This is the tree aimed at `main`.
+Open-source skill library for **software development with AI**.
+
+**Muhammad Awais**  
+Forward Deployed AI Engineer
+
+Version 2.0.0 is the public release. It is licensed under the [MIT License](LICENSE).
 
 Skills live under `skills/`. Folder names are phases. Priority is not in the folder names. It was read from each skill and is recorded in [TREE.md](TREE.md). [GLOBAL_SKILL_ROUTER.md](GLOBAL_SKILL_ROUTER.md) is the routing guide. Read the skill before writing code.
 
@@ -29,6 +34,7 @@ The reasons for this order, including where it differs from a simple top-to-bott
 
 ```text
 Skills/
+├── LICENSE
 ├── GLOBAL_SKILL_ROUTER.md
 ├── README.md
 ├── TREE.md
@@ -87,6 +93,8 @@ Do not commit credentials, tokens, or `.env` files. See [SECURITY.md](SECURITY.m
 
 ## License
 
-Add the project's chosen license here before distributing the repository publicly.
+[MIT](LICENSE). Copyright (c) 2026 Muhammad Awais.
+
+You may use, copy, modify, and distribute these skills, including in commercial work. Keep the copyright notice and license text with the copies you distribute.
 
 **GitHub:** [imawais-engineer/Skills](https://github.com/imawais-engineer/Skills)

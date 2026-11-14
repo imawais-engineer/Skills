@@ -1,6 +1,6 @@
 # Skills — professional tree
 
-This is the professional library aimed at `main`. Competition skills are not here. They are on branch `cursor/hackathon-skills-beaf`.
+This is the public professional library, version 2.0.0, released under the MIT License. Competition skills are not here. They are on branch `cursor/hackathon-skills-beaf`.
 
 Folder names describe the phase. They are not numbered. Priority was set by reading each skill's required inputs, one by one. The sketch order was the shape, not the sequence.
 
@@ -53,6 +53,7 @@ Then continue with encapsulation, security review, release hardening, and deploy
 
 ```
 Skills/
+├── LICENSE
 ├── GLOBAL_SKILL_ROUTER.md
 ├── README.md
 ├── TREE.md

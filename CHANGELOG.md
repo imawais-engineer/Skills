@@ -1,8 +1,10 @@
 # Changelog
 
-## Unreleased (v2.0.0 proposed)
+## 2.0.0 — 2026-11-14
 
-Proposed release: **v2.0.0**. The professional library is `skills/`, with unnumbered phase folders and a priority order read from each skill. No tag and no GitHub release are part of this change. `main` is not updated here.
+Public release of the professional skill library for software development with AI, by Forward Deployed AI Engineer Muhammad Awais. Licensed under MIT.
+
+The library is `skills/`, with unnumbered phase folders and a priority order read from each skill.
 
 ### Added
 
