@@ -1,53 +1,65 @@
-# Skills — professional tree
+# Hackathon compilation
 
-This is the public professional library, version 2.0.0, released under the MIT License. Competition skills are not here. They are on branch `cursor/hackathon-skills-beaf`.
+This branch is the hackathon build library. It contains every professional skill from `main` and all eight hackathon skills. `main` stays the professional product library and does not include the competition skills.
 
-Folder names describe the phase. They are not numbered. Priority was set by reading each skill's required inputs, one by one. The sketch order was the shape, not the sequence.
+The brief is the source of truth. Hackathon skills decide what to build and what the judges must see. The SDLC skills do the developmental work inside that frame. No application code until the brief has been turned into an approved specification.
+
+`hackathon-compliance-review` is read before the project is chosen, and again before the first code, before the demo is recorded, and before the package is submitted. It has one folder. The repeats are gates, not extra copies.
+
+AI skills are in the build stage and are used only when the brief requires AI or the product is an AI product.
 
 ## Priority
 
 | Priority | Skill | Phase | Why this slot |
 | --- | --- | --- | --- |
-| 1 | `sdlc-best-practices` | foundational | SK-01. Creates the requirement IDs every other skill cites. No code until the SRS is approved. |
-| 2 | `project-foundations-and-architecture` | foundational | SK-02. Needs discovery notes from SK-01. Confirmed record is written back into the SRS. No files before that confirmation. |
-| 3 | `app-global-preferences` | foundational | SK-04. Requires the Foundations Record and the SRS. Fills silence only. Precedence is user, then SRS and foundations, then these defaults. |
-| 4 | `complete-app-blueprint` | foundational | SK-03. Requires the confirmed Foundations Record and the SRS. Maps pages, entities, and capabilities before coding. |
-| 5 | `dashboard-first-ui` | design-and-prototype | SK-05. Requires the blueprint page table. Designs the product screen before implementation. |
-| 6 | `functional-prototype-first` | design-and-prototype | SK-06. First code. Requires the approved SRS and the blueprint. Mock data is allowed. Auth and hardening stay out of this pass. |
-| 7 | `data-persistence-design` | data-and-persistence | SK-07. Schema, ownership, and access rules before persistence code. Replaces the prototype's mock data before release. |
-| 8 | `ai-app-builder` | ai-systems | Use only when AI is the product. Defines the AI job after the normal workflow exists. |
-| 9 | `prompt-engineering-system` | ai-systems | Prompts are components of the job defined by `ai-app-builder`. |
-| 10 | `agent-workflow-design` | ai-systems | Use only when a deterministic workflow is not enough. |
-| 11 | `encapsulation-backend-config` | hardening-and-release | SK-11. Constrains public UI and APIs as they are built. The security review applies this skill. |
-| 12 | `security-first-review` | hardening-and-release | SK-12. After the prototype works, before release. Produces the findings the release gate requires. |
-| 13 | `stable-release-hardening` | hardening-and-release | SK-13. Requires a passing prototype and the security findings. Auth and the V&V gate live here. |
-| 14 | `deploy-and-document` | deployment-and-documentation | SK-14. Requires the V&V report. Last, unless the user asks for a labelled preview. |
+| 1 | `hackathon-project-system` | intake | Orchestrator. The brief is the source of truth, and this skill names the rest of the hackathon order. |
+| 2 | `hackathon-brief-analyzer` | intake | Do not design first. Extract requirements, deliverables, rubric, resources, and rules. |
+| 3 | `sdlc-best-practices` | intake | Turn those facts into an SRS with requirement IDs. No code until that specification is approved. |
+| 4 | `hackathon-judging-strategy` | decision | Choose the idea that can become a complete demo and score on the rubric. |
+| 5 | `hackathon-compliance-review` | decision | Hard stops before a stack or a feature is locked: eligibility, banned tools, licenses, required deliverables. |
+| 6 | `project-foundations-and-architecture` | decision | Lock platform, access, and privacy inside the rules. Confirm before any file. |
+| 7 | `hackathon-resource-planner` | decision | Map required and allowed tools. Use the default stack only where the brief is silent. |
+| 8 | `app-global-preferences` | decision | Fill leftover silence. Never override the brief, the rules, the SRS, or the foundations record. |
+| 9 | `complete-app-blueprint` | plan | Map the pages, data, and APIs of the minimum winning demo. |
+| 10 | `hackathon-build-roadmap` | plan | Timebox that blueprint. A working demo beats an unfinished larger system. |
+| 11 | `dashboard-first-ui` | build | Specify the screens the demo must show before they are coded. |
+| 12 | `functional-prototype-first` | build | First code. Prove the core workflow. Mock data is allowed. Auth waits unless it is the demo. |
+| 13 | `data-persistence-design` | build | Replace mock data and add the integrations the brief or the demo requires. |
+| 14 | `ai-app-builder` | build | Only when AI is required or is the product. |
+| 15 | `prompt-engineering-system` | build | Prompts for that AI job. Skip when there is no AI job. |
+| 16 | `agent-workflow-design` | build | Only when a fixed workflow is not enough. |
+| 17 | `encapsulation-backend-config` | harden | The public demo must not show keys, env names, or provider internals. |
+| 18 | `security-first-review` | harden | After the demo path works, before judges use it. |
+| 19 | `stable-release-hardening` | harden | Tests and auth only to the depth the demo and the brief require. Uses the security findings. |
+| 20 | `hackathon-demo-pitch` | submit | Show the problem, the working path, the required tools, and the rubric evidence. |
+| 21 | `deploy-and-document` | submit | Live URL, repo, and setup the submission will point at. |
+| 22 | `hackathon-submission-packager` | submit | Package only what the competition asks for, after the links work. |
 
-## Sequences
+## Hackathon sequence
 
-### Product
-
-1. `sdlc-best-practices`
-2. `project-foundations-and-architecture`
-3. `app-global-preferences`
-4. `complete-app-blueprint`
-5. `dashboard-first-ui`
-6. `functional-prototype-first`
-7. `data-persistence-design`
-8. `encapsulation-backend-config`
-9. `security-first-review`
-10. `stable-release-hardening`
-11. `deploy-and-document`
-
-### AI product
-
-Run the product sequence, and when AI is the core job insert, after the data skill:
-
-1. `ai-app-builder`
-2. `prompt-engineering-system`
-3. `agent-workflow-design` only if an agent is justified
-
-Then continue with encapsulation, security review, release hardening, and deploy.
+1. `hackathon-project-system`
+2. `hackathon-brief-analyzer`
+3. `sdlc-best-practices`
+4. `hackathon-judging-strategy`
+5. `hackathon-compliance-review`
+6. `project-foundations-and-architecture`
+7. `hackathon-resource-planner`
+8. `app-global-preferences`
+9. `complete-app-blueprint`
+10. `hackathon-build-roadmap`
+11. `hackathon-compliance-review` again, before the first code
+12. `dashboard-first-ui`
+13. `functional-prototype-first`
+14. `data-persistence-design`
+15. `ai-app-builder`, `prompt-engineering-system`, and `agent-workflow-design` only when the brief or the product needs them
+16. `encapsulation-backend-config`
+17. `security-first-review`
+18. `stable-release-hardening`
+19. `hackathon-compliance-review` again, before the demo is recorded
+20. `hackathon-demo-pitch`
+21. `deploy-and-document`
+22. `hackathon-compliance-review` again, before packaging
+23. `hackathon-submission-packager`
 
 ## Directory
 
@@ -58,30 +70,34 @@ Skills/
 ├── README.md
 ├── TREE.md
 └── skills/
-    ├── foundational/
-    │   ├── sdlc-best-practices/
+    ├── intake/
+    │   ├── hackathon-project-system/
+    │   ├── hackathon-brief-analyzer/
+    │   └── sdlc-best-practices/
+    ├── decision/
+    │   ├── hackathon-judging-strategy/
+    │   ├── hackathon-compliance-review/
     │   ├── project-foundations-and-architecture/
-    │   ├── app-global-preferences/
-    │   └── complete-app-blueprint/
-    ├── design-and-prototype/
+    │   ├── hackathon-resource-planner/
+    │   └── app-global-preferences/
+    ├── plan/
+    │   ├── complete-app-blueprint/
+    │   └── hackathon-build-roadmap/
+    ├── build/
     │   ├── dashboard-first-ui/
-    │   └── functional-prototype-first/
-    ├── data-and-persistence/
-    │   └── data-persistence-design/
-    ├── ai-systems/
+    │   ├── functional-prototype-first/
+    │   ├── data-persistence-design/
     │   ├── ai-app-builder/
     │   ├── prompt-engineering-system/
     │   └── agent-workflow-design/
-    ├── hardening-and-release/
+    ├── harden/
     │   ├── encapsulation-backend-config/
     │   ├── security-first-review/
     │   └── stable-release-hardening/
-    └── deployment-and-documentation/
-        └── deploy-and-document/
+    └── submit/
+        ├── hackathon-demo-pitch/
+        ├── deploy-and-document/
+        └── hackathon-submission-packager/
 ```
-
-Each skill folder contains `SKILL.md`. `agents/openai.yaml` is present on the AI skills and on the skills that already carried it.
-
-A skill that is not in this priority list belongs in an unsorted folder under skills. There are none.
 
 Routing detail is in [GLOBAL_SKILL_ROUTER.md](GLOBAL_SKILL_ROUTER.md).

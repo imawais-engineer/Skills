@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the canonical skills/ tree.
+"""Validate the hackathon compilation under skills/.
 
 Stdlib only. Checks:
 - every SKILL.md has YAML frontmatter with name and description
@@ -19,22 +19,30 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-# Priority was read from each skill's required inputs, not from folder numbers.
+# Hackathon compilation. Order is the first time each skill is read.
 PRIORITY: list[tuple[int, str, str]] = [
-    (1, "sdlc-best-practices", "foundational"),
-    (2, "project-foundations-and-architecture", "foundational"),
-    (3, "app-global-preferences", "foundational"),
-    (4, "complete-app-blueprint", "foundational"),
-    (5, "dashboard-first-ui", "design-and-prototype"),
-    (6, "functional-prototype-first", "design-and-prototype"),
-    (7, "data-persistence-design", "data-and-persistence"),
-    (8, "ai-app-builder", "ai-systems"),
-    (9, "prompt-engineering-system", "ai-systems"),
-    (10, "agent-workflow-design", "ai-systems"),
-    (11, "encapsulation-backend-config", "hardening-and-release"),
-    (12, "security-first-review", "hardening-and-release"),
-    (13, "stable-release-hardening", "hardening-and-release"),
-    (14, "deploy-and-document", "deployment-and-documentation"),
+    (1, "hackathon-project-system", "intake"),
+    (2, "hackathon-brief-analyzer", "intake"),
+    (3, "sdlc-best-practices", "intake"),
+    (4, "hackathon-judging-strategy", "decision"),
+    (5, "hackathon-compliance-review", "decision"),
+    (6, "project-foundations-and-architecture", "decision"),
+    (7, "hackathon-resource-planner", "decision"),
+    (8, "app-global-preferences", "decision"),
+    (9, "complete-app-blueprint", "plan"),
+    (10, "hackathon-build-roadmap", "plan"),
+    (11, "dashboard-first-ui", "build"),
+    (12, "functional-prototype-first", "build"),
+    (13, "data-persistence-design", "build"),
+    (14, "ai-app-builder", "build"),
+    (15, "prompt-engineering-system", "build"),
+    (16, "agent-workflow-design", "build"),
+    (17, "encapsulation-backend-config", "harden"),
+    (18, "security-first-review", "harden"),
+    (19, "stable-release-hardening", "harden"),
+    (20, "hackathon-demo-pitch", "submit"),
+    (21, "deploy-and-document", "submit"),
+    (22, "hackathon-submission-packager", "submit"),
 ]
 
 PRIORITY_ROW = re.compile(

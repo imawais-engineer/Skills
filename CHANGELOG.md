@@ -1,5 +1,11 @@
 # Changelog
 
+## Hackathon compilation
+
+On branch `hackathon-skills`, based on v2.0.0. This branch is not merged into `main`.
+
+The eight competition skills are compiled with the fourteen professional skills. Hackathon instructions set the project. SDLC skills run at the developmental stage the brief and the build roadmap call for. `hackathon-compliance-review` is a single skill used at four gates: before the idea is locked, before the first code, before the demo is recorded, and before packaging. AI skills stay in the build stage and are used only when the brief or the product requires them.
+
 ## 2.0.0 — 2026-11-14
 
 Public release of the professional skill library for software development with AI, by Forward Deployed AI Engineer Muhammad Awais. Licensed under MIT.
