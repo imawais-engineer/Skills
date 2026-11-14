@@ -14,3 +14,5 @@ credentials*.json
 service-account*.json
 local.properties
 .DS_Store
+__pycache__/
+*.pyc
