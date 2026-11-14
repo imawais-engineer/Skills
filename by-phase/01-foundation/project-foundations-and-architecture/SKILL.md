@@ -1,188 +1,97 @@
 ---
 name: project-foundations-and-architecture
-description: Lock the platform, stack, access model and privacy baseline before any code is written — asking only the questions that change the build.
+description: Published skill from SDLC Skills Hub (SRS Architect themed). Extracted and structured for agent use.
+source: https://sdlc.base44.app/skill/project-foundations-and-architecture
+priority: foundation-first
 ---
 
-# Project Foundations & Architecture Decisions
+V1.0.0
+Project Foundations & Architecture Decisions
 
-## Purpose
+Lock the platform, stack, access model and privacy baseline before any code is written — asking only the questions that change the build.
 
-Capture the decisions that cannot be changed cheaply later — what the product is for, who uses it, where it runs, what it is built with, and who may see the data — before a single file is generated. Most rebuild loops come from one of these being decided silently by the assistant instead of explicitly by the user.
+Project Foundations & Architecture Decisions
 
-This skill does not prescribe a stack. It makes missing decisions visible, offers a small set of grounded options, and produces a confirmed summary that downstream skills and the build itself must follow.
+Skill SK-02 · Phase 1 — Foundation (Architecture decisions) · Applies to: web apps, Android apps, APIs, AI apps Lock the decisions that are expensive to change — platform, stack, access model, data and privacy — before any file is generated.
 
-## When to apply
+1. Purpose
 
-- At the start of a new app, a major feature set, or a rebuild.
-- When the request names no platform, no stack, no access model, or no data store.
-- When a new request conflicts with decisions already recorded.
+Most rebuild loops come from a foundational decision being made silently by the AI instead of explicitly by the user: web when the user needed Android, no login when data was per-person, a database the team cannot operate. This skill does not prescribe a stack. It makes missing decisions visible, offers a small set of grounded options, and produces a confirmed Foundations Record that the SRS (SK-01), the blueprint (SK-03) and the build must follow.
 
-Do not apply mid-build to re-litigate settled decisions. If a genuine conflict appears, use Conflict Handling and stop at the affected area only.
+2. When to use — and when not to
 
-## Operating rules
+Use it when:
 
-1. Extract before you ask. Mine the request, any attached brief, existing project files, and prior conversation for: goal, users, core workflow, platforms, stack, access model, data, integrations, deadlines.
-2. Ask only material questions (see Question Selection Test). Silence on an immaterial point is not a gap.
-3. Ask in rounds of at most three questions, grouped by decision area, each with concrete options.
-4. Never invent a decision and present it as the user's. Anything you chose yourself is labelled Assumed or Recommended.
-5. Use the user's own words for goals and scope. Do not expand the product while clarifying it.
-6. Surface conflicts explicitly instead of quietly picking one side.
-7. Confirm the summary before building. Unconfirmed assumptions are the root cause of rework.
-8. Plain language. Name trade-offs, costs, and operational burden; avoid unexplained jargon.
+Starting a new app, a major feature set, or a rebuild.
+The request names no platform, stack, access model, or data store.
+A new request conflicts with decisions already recorded.
 
-## Intake — what to extract
+Do not use it mid-build to re-litigate settled decisions. If a genuine conflict appears, apply Conflict handling (step 6) to the affected area only.
 
-| Area | Look for |
-| --- | --- |
-| Goal | the problem, the outcome, why now |
-| Users | who uses it, internal or public, rough scale |
-| Core workflow | the one path that must work end to end |
-| Scope edges | what is explicitly out of scope |
-| Platforms | web, mobile, desktop, API, CLI |
-| Stack | languages, frameworks, backend, database, storage |
-| Access | public or accounts, roles, per-user data |
-| Data | what is stored, what is sensitive |
-| Integrations | third-party services, payments, email, AI |
-| Constraints | deadline, budget, team skills, existing systems |
+3. Inputs required
+Input	Source	Required
+Idea or brief, discovery notes	User / SK-01	Yes
+Existing code, systems, accounts	Repository / user	If any
+Team skills and who operates the app after handoff	User	Yes
+Constraints: deadline, budget, compliance, client policy	User	If any
+Interface direction (Interface Library)	User	Optional
+4. Procedure
+Step	SDLC phase	Action	Output
+1	Discovery	Extract before you ask. Mine the brief, files, and prior chat for every intake area below. Remove answered items from the question list.	Intake table
+2	Analysis	Apply the question selection test to each remaining gap.	Material gaps
+3	Discovery	Ask in rounds of ≤ 3 questions, grouped by decision area, each with concrete options.	Answers
+4	Design	For "you decide" answers, apply the recommendation rules.	Recommended decisions
+5	Design	Classify each item Decided / Recommended / Assumed and blocking / non-blocking.	Decision log
+6	Design	Surface conflicts in one sentence with two viable resolutions. Never choose silently.	Resolved conflicts
+7	Approval	Present the Foundations Record (section 5) and ask for one confirmation.	Confirmed record
+8	Handoff	Pass the record unchanged to SK-01 (SRS sections 4, 6, 7) and SK-03.	Handoff
+Intake — what to extract
+Area	Look for
+Goal	the problem, the outcome, why now
+Users	who, internal or public, rough scale
+Core workflow	the one path that must work end to end
+Scope edges	what is explicitly out of scope
+Platforms	web, responsive PWA, native Android/iOS, cross-platform (React Native / Flutter), desktop, API, CLI
+Stack	languages, frameworks, backend, database, storage
+Access	public or accounts, roles, per-user data
+Data	what is stored, what is sensitive
+Integrations	payments, email, auth provider, AI models, maps, analytics
+Constraints	deadline, budget, team skills, existing systems
+Decision areas
+A. Problem, users, scope — blocking. Ask: "What single workflow must work end to end in v1?" and "Who uses it, and roughly how many?"
+B. Platform and delivery — blocking. Never assume web because it is the default. For Android, also record minimum SDK / Android version, distribution (Play Store, APK, internal), offline needs, and device permissions (camera, location, notifications).
+C. Technology architecture — settle only where the user has a preference, existing system, or hard constraint; otherwise recommend and mark Assumed. Rules: smallest stack that meets the requirements; what the team can operate after handoff; managed services unless control is required; no paid accounts or keys the user has not agreed to; keep a user-stated stack (note a real risk once, then proceed).
+D. Accounts, privacy, permissions — blocking. Public or accounts? Who may sign up? Per-user private data? Roles? Sensitive data (personal, health, payments, documents)? Can one user see another's records? Deletion/export requests? Ask directly about public content with private submissions — the most commonly missed case.
+E. Security and operations baseline — record as requirements: auth method, CRUD permission per record type, where secrets live and who owns them, validation and abuse protection on public forms, backups/export, applicable regulation.
+F. Constraints — timeline, budget, reuse, team skills, approvals, lock-in, offline, localization, accessibility.
+G. Interface direction — never invent one, never substitute adjectives ("modern", "clean", "premium") — they are a top source of endless UI edits. Point the user to the Interface Library (Interfaces tab of this hub); record the chosen direction and carry its prompt verbatim, or record "none selected" and keep neutral defaults.
+Question selection test
 
-Anything already answered here is removed from the question list.
+A question is material only if a different answer would change at least one of: (1) the data model, (2) screens or navigation, (3) access rules, (4) deploy target, (5) integrations. Do not ask about naming, colours, copy, or file layout. If an answer can be inferred from a stated constraint, ask it as a confirmation, not open-ended.
 
-## Decision areas
+Recommendation rules
 
-### A. Problem, users and scope
+When the user says "you decide": give one recommendation with a one-line reason, at most two alternatives with one-line trade-offs, mark it Recommended, and ask for a single confirmation. Prefer fewer moving parts, lower operating cost, and what the user can support.
 
-- Decided when: the core workflow is named and the audience is clear.
-- Missing when: the request is a feature list with no workflow, or the audience is ambiguous (consumer vs internal team).
-- Ask: 'What is the single workflow that has to work end to end in the first version?' and 'Who uses it, and roughly how many?'
-- Blocking: yes. Screens, data model and access rules all derive from this.
+Conflict handling
+Situation	Resolve by asking
+Mobile app requested, stack only supports server-rendered web	native Android, cross-platform, or PWA
+Public app with per-user private records	login required, or local-only storage
+No login, but data must persist per person	anonymous device storage or accounts
+Tight deadline with custom auth and infrastructure	managed service vs reduced scope
+User stack cannot meet a stated requirement	which requirement gives way, or which choice changes
+5. Deliverables
 
-### B. Platform and delivery targets
+Foundations Record — present exactly this block (≤ 30 lines), filled in:
 
-- Options: browser web app; responsive web plus installable PWA; native iOS and Android; cross-platform mobile (React Native or Flutter); desktop (Electron or Tauri); API or service only; a stated combination.
-- Why material: it changes UI framework, navigation, offline behaviour, auth flows, and where the app is deployed and distributed.
-- Ask: 'Where does this need to run on day one, and does it need to work offline or be installable?'
-- Blocking: yes. Never assume web because it is the default path.
-
-### C. Technology architecture
-
-Only settle these where the user has a preference, an existing system, or a hard constraint. Otherwise recommend and mark as Assumed.
-
-- Frontend: React, Vue, Svelte, plain HTML/CSS/JS, React Native, Flutter.
-- Backend: managed backend-as-a-service; Node with Express or similar; Python with FastAPI or similar; serverless functions; none (static plus third-party APIs).
-- Database: managed PostgreSQL or another relational store; document store; embedded or local storage; none.
-- File storage: managed object storage; the platform's own file storage; none required.
-- Hosting: platform hosting; managed static or serverless hosts; a cloud VM; containers.
-- Integrations: payments, email, auth provider, AI models, maps, analytics.
-
-Decision rules:
-
-- Prefer the smallest stack that satisfies the stated requirements.
-- Prefer what the user or their team can actually operate after handoff.
-- Prefer managed services unless a requirement demands infrastructure control.
-- Do not require accounts, keys, or paid services the user has not agreed to.
-- If the user states a stack, keep it. Note a genuine risk once, then proceed with their choice.
-
-### D. Accounts, privacy and permissions
-
-- Questions: public or accounts? who may sign up? is there per-user private data? are there roles (admin, staff, customer)? what is sensitive (personal details, health, payments, documents)? may one user see another's records? are deletion or export requests expected?
-- Public content with private submissions is the most commonly missed case. Ask it directly rather than inferring it.
-- Blocking: yes. It determines the security rules that must exist from the first write, not later.
-
-### E. Security and operations baseline
-
-Record as requirements, not as implementation detail:
-
-- how users authenticate (email and password, social login, single sign-on, no login)
-- who may create, read, update, delete each kind of record
-- where secrets and API keys live, and who owns them
-- input validation and abuse protection for public forms
-- backups or export expectations
-- any regulatory or client policy that applies
-
-### F. Constraints
-
-Timeline, budget, existing systems that must be reused, team skills, third-party approvals, vendor lock-in, offline needs, localization, accessibility.
-
-### G. Interface direction (visual language)
-
-- Decided when: the user described a look, referenced a direction, supplied a design, or said the visual choice does not matter.
-- Missing when: the project is described only in terms of features.
-- Never invent a direction, and never substitute adjectives like 'modern', 'clean' or 'premium' — they are the source of endless interface edits, not a decision.
-
-Instead of interrogating a non-design user, point them to the **Interface Library** (the Interfaces tab of SDLC Skills Hub). It holds ten real-world landing-page directions across industries, each with a live preview and a copyable, tool-agnostic design prompt. Ask them to open it, choose the direction that fits, and paste its prompt.
-
-- If they select one: record the direction name, carry its prompt verbatim into the handoff, and apply it to the project's real sections and content — not the demo copy.
-- If they skip: record 'Interface direction: none selected' and keep neutral defaults. Do not fill the gap yourself.
-- Blocking only for landing or marketing surfaces where visual quality was called out. Otherwise record the gap and continue.
-
-
-
-## Question selection test
-
-A question is material only if a different answer would change at least one of:
-
-1. the data model
-2. the screens or navigation
-3. the access rules
-4. the deploy target
-5. the integrations
-
-Do not ask about naming, colours, copy, file layout, or anything reversible in a single edit. Those belong to later skills.
-
-If the answer is already stated, do not ask. If it can be inferred confidently from a stated constraint, state the inference as a question of confirmation rather than asking it open-ended.
-
-## Recommendation rules
-
-When the user says 'you decide', 'recommend', or gives a vague answer:
-
-1. Give one recommendation with a one-line reason.
-2. Offer at most two alternatives, each with a one-line trade-off.
-3. Mark the choice Recommended in the summary and ask for a single confirmation.
-4. Prefer fewer moving parts, lower operational cost, and the option the user can support.
-
-## Conflict handling
-
-| Situation | Resolve by asking |
-| --- | --- |
-| Mobile app requested, stack only supports server-rendered web | native, cross-platform, or PWA |
-| Public app with per-user private records | access model: login required, or local-only storage |
-| No login requested, but data must persist per person | anonymous device storage or accounts |
-| Tight deadline with custom auth and infrastructure | managed service versus reduced scope |
-| User states a stack that cannot meet a stated requirement | which requirement gives way, or which choice changes |
-
-State the conflict in one sentence, then the two viable resolutions. Do not choose silently.
-
-## Blocking versus non-blocking
-
-Blocking — must be resolved or explicitly waived before build:
-
-- target platform
-- access model and privacy of user data
-- where data lives (database, local, none)
-- required third-party integrations and who supplies credentials
-- secrets and API keys the build depends on
-
-Non-blocking — record as assumptions and move on:
-
-- component library and design system
-- file and folder naming
-- test framework
-- analytics provider
-- copy and branding
-
-## Confirmation summary
-
-Present exactly this block, filled in, and ask for a single confirmation:
-
-```
-Project Foundations
+Project Foundations — v<version> · <date>
 
 Product:        <name and one-line purpose>
 Users:          <who, roughly how many>
 Core workflow:  <the path that must work end to end>
 Out of scope:   <explicit exclusions>
-Platforms:      <day-one targets, offline or installable needs>
-Interface:      <design direction name, or none selected>
+Platforms:      <day-one targets; Android min version; offline/installable>
+Interface:      <Interface Library direction, or none selected>
 Architecture:   <layer -> decision (Decided | Recommended | Assumed)>
 Access model:   <public, accounts, roles>
 Data & privacy: <what is stored, what is sensitive, who sees it>
@@ -192,26 +101,66 @@ Constraints:    <deadline, budget, existing systems>
 Open questions: <none, or the blocking items left>
 
 Status: Ready to build | Blocked on <items>
-```
 
-Keep it under 30 lines. It is a decision record, not a document.
+6. Acceptance criteria
+Every blocking item is Decided, Recommended-and-confirmed, or explicitly waived by the user.
+Every Assumed item is labelled as such — none is presented as the user's decision.
+The record maps into SRS sections 3, 4, 6 and 7 without contradiction.
+The user confirmed the record in writing.
+7. Verification checklist
+ Intake extracted before any question was asked.
+ Each question passed the selection test; ≤ 3 per round.
+ Platform decided (never defaulted); Android specifics recorded if relevant.
+ Access model and per-user privacy decided, including "public content, private submissions".
+ Data store and secrets owner decided.
+ Required integrations listed with who supplies credentials.
+ Interface direction recorded or "none selected".
+ Conflicts stated with two resolutions and resolved by the user.
+ Foundations Record ≤ 30 lines and confirmed.
+8. Failure modes and anti-loop guards
+Failure mode	Guard
+A twelve-question wall that delays a build the user can already describe	Extract first; ≤ 3 material questions per round.
+Silently defaulting to web, React, a relational DB, or login-required	Platform, data store and access model are blocking.
+Asking about design, copy or naming in foundation work	Question selection test.
+Inventing users, scale or compliance needs	Use the user's words; label anything else Assumed.
+Recommending infrastructure the user cannot operate	"Operable after handoff" rule.
+Overriding the user's stack silently	Note the risk once, then proceed with their choice.
+Rebuild loop after a platform switch (web → Android) late in the build	Platform is decided and confirmed here, before scaffolding.
 
-## Build gate
+Build gate: do not scaffold, install packages, or write feature code while a blocking item is unresolved. If the user insists, name what is missing in one line, proceed only with an explicit waiver, and mark waived items Assumed.
 
-Do not scaffold, install packages, or write feature code while a blocking item is unresolved. If the user asks to start anyway, name what is missing in one line, proceed only with their explicit waiver, and mark the waived items Assumed in the summary.
+9. Prompt template
+ROLE: You are a software architect running a foundations interview. No code in this session.
+INPUT: <brief / discovery notes / existing system notes>
+DO:
+1. Extract goal, users, core workflow, scope edges, platforms, stack, access, data, integrations, constraints from the input. Do not ask about anything already answered.
+2. Ask only material questions (they change data model, screens, access rules, deploy target, or integrations). Max 3 per round, each with concrete options.
+3. For "you decide": one recommendation + one-line reason, max two alternatives with trade-offs.
+4. Label every decision Decided / Recommended / Assumed. State conflicts with two resolutions; never pick silently.
+5. Output the Project Foundations record (≤ 30 lines) with Status: Ready to build | Blocked on <items>, then STOP and wait for "CONFIRMED".
+NEVER: default to web or login-required, invent compliance or scale, use adjectives instead of decisions.
 
-## Handoff
+10. Traceability to the SRS
+Foundations field	SRS section
+Product, Core workflow, Out of scope	§1, §2, §8
+Users, Access model	§3 (roles: can / cannot)
+Platforms, Constraints	§4
+Security, Data & privacy	§6 (NFR-security), §7 (access rule column)
+Open questions, Assumed items	§10, §11
 
-After confirmation, pass the summary unchanged to the next skill. It is the input for every later phase; later skills must not contradict it without raising a conflict.
+Each Decided item that constrains behaviour becomes an NFR (e.g. NFR-3: The app runs on Android 8.0+ (API 26)).
 
-Next in sequence: Complete App Blueprint (foundation planning), then Dashboard First UI or Functional Prototype First, then Data Persistence Design.
+11. Definition of done
 
-## Anti-patterns
+The Foundations Record is confirmed by the user, shows Status: Ready to build, and has been copied into the SRS. Later skills must not contradict it without raising a conflict.
 
-- A twelve-question wall that delays a build the user can already describe.
-- Silently defaulting to web, React, a relational database, or login-required.
-- Asking about design, copy, or naming during foundation work.
-- Inventing users, scale, or compliance needs the user never mentioned.
-- Recommending infrastructure the user cannot operate after handoff.
-- Restating the user's stack as your recommendation, or overriding their choice without saying so.
+Related skills
 
+Previous: SK-01 SDLC Best Practices. Next: SK-03 Complete App Blueprint, then SK-05 Dashboard First UI or SK-06 Functional Prototype First, then SK-07 Data Persistence Design.
+
+Ready to hand this to your AI?
+
+Copy the skill, drop it into your project, and require the AI to read it before the first prompt.
+
+COPY SKILL
+DOWNLOAD .MD

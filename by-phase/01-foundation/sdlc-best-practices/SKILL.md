@@ -1,119 +1,180 @@
 ---
 name: sdlc-best-practices
-description: The gate skill. Forces a full discovery discussion and a complete SRS before any code is written, so the build starts from a specification instead of a guess.
+description: Published skill from SDLC Skills Hub (SRS Architect themed). Extracted and structured for agent use.
+source: https://sdlc.base44.app/skill/sdlc-best-practices
+priority: foundation-first
 ---
 
-# SDLC Best Practices
+V1.0.0
+SDLC Best Practices
 
-## Purpose
+The gate skill. Forces a full discovery discussion and a complete SRS before any code is written, so the build starts from a specification instead of a guess.
 
-This skill stops the most expensive failure in AI-assisted software: building before the requirement is understood. A vague prompt is not a specification. When the AI starts coding from one, the app is rebuilt dozens of times and nobody can say whether it is finished.
+SDLC Best Practices
 
-Read this skill in full before writing any code, creating any file, or generating any screen.
+Skill SK-01 · Phase 0 — Gate (Requirements) · Applies to: web apps, Android apps, APIs, AI apps The gate skill. No code is written until a complete, approved SRS exists.
 
-## When to use it
+1. Purpose
 
-Use it at the start of every new project, and again whenever a change is large enough to alter scope, data, or user flows — a new feature area, a new user role, an integration, a redesign.
+The most expensive failure in AI-assisted development is building before the requirement is understood. A prompt such as "build me a booking app" is not a specification. When an AI builder codes from it, every gap is filled with a guess; each guess becomes a bug; each bug fix triggers another guess. That is the infinite edit loop.
 
-Do not use it for a typo fix or a copy change.
+This skill breaks the loop at its root. It forces a structured discovery, produces a Software Requirements Specification (SRS) in which every requirement has an ID and a testable acceptance criterion, and blocks implementation until a human approves it. Every other skill in this hub traces back to the requirement IDs created here.
 
-## The rule
+2. When to use — and when not to
 
-You must never generate application code until all four artifacts exist and the human has approvingly answered the discovery questions:
+Use it when:
 
-1. **Discovery notes** — who the users are, what they do today, what breaks.
-2. **SRS** — scope, users and roles, functional requirements, data model, non-functional requirements, out-of-scope list.
-3. **Roadmap** — the order work will be done, and why that order.
-4. **Task list** — small, verifiable tasks with explicit acceptance criteria.
+Starting any new project (web, Android, API, AI app, internal tool).
+A change alters scope, data, roles, user flows, integrations, or platforms.
+An AI builder has needed more than two correction rounds on the same feature — that is a missing requirement, not a coding problem.
 
-If any of the four is missing, your only valid output is the next question that completes it. Never fill a gap with an assumption. When you must proceed on an assumption, write it down under "Assumptions" and ask the human to confirm it explicitly.
+Do not use it for: a typo, a copy change, or a single-property style fix that is reversible in one edit.
 
-## The process
+3. Inputs required
+Input	Source	Required
+Idea or brief in the user's own words	User	Yes
+Target users and who must be blocked	User	Yes
+Platform targets (web, Android, iOS, API)	User / SK-02	Yes
+Existing systems, data, or code	User / repository	If any
+Constraints: deadline, budget, compliance, team skills	User	If any
+Interface direction (Interface Library prompt or "none")	User	Optional
+4. Procedure
+Step	SDLC phase	Action	Output
+1	Discovery	Restate the problem in one sentence and ask the user to confirm it.	Problem statement
+2	Discovery	Ask the discovery questions below, at most three per round, and wait. Never answer them yourself.	Discovery notes
+3	Analysis	Run the completeness check (section 7). Every failed item becomes the next question.	Gap list
+4	Specification	Write the SRS using the template in section 5. Number every requirement.	SRS v0.x
+5	Validation	Run the ambiguity check: replace every vague word with a measurable rule.	SRS v1.0 candidate
+6	Approval	Present the SRS and stop. Record the approval and date.	Approved SRS v1.0
+7	Planning	Convert the SRS into a roadmap and tasks; every task names the FR IDs it satisfies.	Roadmap, task list
+8	Build	Implement one task at a time, in roadmap order.	Increment
+9	Verify & validate	After each task, run its acceptance criteria and record the result against the FR ID.	Traceability matrix row
+10	Change control	Any new or changed behaviour updates the SRS first (new version), then the code.	SRS changelog
+Discovery questions
+Area	Ask
+Problem	What breaks today? How is it handled now? What does success look like in one sentence?
+Users	Who uses this? What can each role do that others cannot? Who must be blocked?
+Core flow	Walk me through the single most important thing a user does, step by step.
+Data	What is created, by whom, and what happens to it later? What must never be lost?
+Rules	What is not allowed? Limits, approvals, pricing, eligibility, timing.
+Edge cases	What happens on a duplicate, failure, cancellation, offline, or empty state?
+Platforms	Web, Android, both? Offline? Installable? Minimum Android version or browsers?
+Out of scope	What are we deliberately not building in version one?
+Ambiguity rule
 
-### 1. Discuss (no code)
-Ask the questions below, a few at a time, and wait for answers. Do not answer them yourself.
+These words are banned in requirements unless followed by a measurable definition: fast, simple, modern, clean, user-friendly, secure, scalable, intuitive, etc., some, many, manage, handle, support, appropriate, as needed.
 
-| Area | Questions you must ask |
-| --- | --- |
-| Problem | What breaks today? How is it handled right now? What does success look like in one sentence? |
-| Users | Who uses this, and what can each type do that others cannot? Who must be blocked? |
-| Core flow | Walk me through the single most important thing a user does, step by step. |
-| Data | What is created, by whom, and what happens to it later? What must never be lost? |
-| Rules | What is not allowed? Limits, approvals, pricing, eligibility, timing. |
-| Edge cases | What happens on a duplicate, a failure, a cancellation, an empty state? |
-| Out of scope | What are we deliberately not building in version one? |
+✗ "The page loads fast." → ✓ "NFR-1: The dashboard renders first content in ≤ 2.0 s on a 4G connection (p75)."
+✗ "Users can manage their profile." → ✓ "FR-7: A signed-in user can edit name (1–60 chars) and avatar (PNG/JPG ≤ 2 MB); email is read-only."
+5. Deliverables
+Discovery notes — answers in the user's words.
+SRS — exactly this structure (IEEE 29148 aligned):
+# Software Requirements Specification — <Project> · v<version> · <date>
 
-### 2. Specify
-Produce the SRS using the template below. Every functional requirement gets a numbered ID so it can be referenced later.
-
-### 3. Plan
-Turn the SRS into a roadmap of phases, then break each phase into tasks small enough to verify in one sitting. Every task carries an acceptance criterion written as an observable outcome.
-
-### 4. Build
-Only now write code, one task at a time, in roadmap order. After each task, state which requirement ID it satisfies and how it was verified.
-
-### 5. Review
-At the end of each phase, list what is built, what is verified, what is deferred, and what changed in the SRS. Never silently drift from the spec — update it and say so.
-
-## Required output template
-
-Produce exactly this structure, filled in:
-
-```markdown
-# Software Requirements Specification — <Project>
-
-## 1. Problem and goal
-## 2. Users and roles
-| Role | Can do | Cannot do |
-| --- | --- | --- |
-
-## 3. Scope
-### In scope
-### Out of scope (v1)
-
-## 4. Functional requirements
-| ID | Requirement | Acceptance criterion |
-| --- | --- | --- |
-| FR-1 |  |  |
-
-## 5. Data model
-| Entity | Fields | Owner | Rules |
+## 1. Purpose and problem
+## 2. Scope
+### 2.1 In scope (v1)
+### 2.2 Out of scope (v1)
+## 3. Stakeholders and user roles
+| Role | Can do | Cannot do | Approx. count |
 | --- | --- | --- | --- |
-
+## 4. Platforms and constraints
+## 5. Functional requirements
+| ID | Requirement (shall) | Priority (Must/Should/Could) | Acceptance criteria (Given / When / Then) |
+| --- | --- | --- | --- |
+| FR-1 | | Must | Given … When … Then … |
 ## 6. Non-functional requirements
-Performance, accessibility, responsiveness, privacy, localization.
+| ID | Category | Requirement | Measure |
+| --- | --- | --- | --- |
+| NFR-1 | Performance | | |
+## 7. Data model
+| Entity | Fields (type, required) | Owner | Lifecycle states | Access rule |
+| --- | --- | --- | --- | --- |
+## 8. User flows (numbered steps, including error and empty paths)
+## 9. Edge cases
+## 10. Assumptions (each confirmed or pending)
+## 11. Open questions (blocking / non-blocking)
+## 12. Roadmap
+| Phase | Outcome | FR IDs | Depends on |
+| --- | --- | --- | --- |
+## 13. Task list
+- [ ] T-1 — <task> — satisfies FR-1 — done when <observable outcome>
+## 14. Traceability matrix
+| FR ID | Task(s) | Test ID(s) | Status |
+| --- | --- | --- | --- |
+## 15. Changelog
 
-## 7. Assumptions to confirm
-## 8. Open questions
+Roadmap and task list — inside the SRS (sections 12–13).
+Traceability matrix — inside the SRS (section 14), updated after every task.
+6. Acceptance criteria
+Every functional requirement has a unique ID, a priority, and at least one Given/When/Then criterion.
+Every NFR has a measurable target.
+Every role states both what it can and cannot do.
+The out-of-scope list has at least one entry.
+No banned ambiguous word appears without a measurable definition.
+The human has explicitly approved the SRS version that the build uses.
+7. Verification checklist (completeness check)
+ Problem statement confirmed by the user.
+ All roles listed, with "cannot do" filled in.
+ Core flow written as numbered steps, including failure and empty paths.
+ Every entity named with fields, owner, lifecycle, and access rule.
+ Every FR has ID + priority + Given/When/Then.
+ Every NFR has a number (time, size, count, percentage, version).
+ Platforms stated (web / Android / both), with offline and minimum-version needs.
+ Out of scope is explicit — silence is not scope.
+ Every assumption is confirmed or listed as pending.
+ Blocking open questions = 0.
+ Roadmap and task list exist and every task cites an FR ID.
+ Human approval recorded with SRS version and date.
+8. Failure modes and anti-loop guards
+Failure mode	Symptom	Guard
+Infinite edit loop	The same screen is regenerated 3+ times.	Stop editing. Find the FR behind it; if none exists or it lacks Given/When/Then, write it, get approval, then make one edit that cites it.
+Building to impress	A generic dashboard nobody asked for.	Only build what an FR ID requires.
+Silent assumptions	"Prices in USD" decided nowhere.	Every guess goes to section 10 and must be confirmed.
+Scope by omission	Everything is implicitly expected.	Out-of-scope list is mandatory.
+Requirements as vibes	"Manage profile" with no fields or rules.	Ambiguity rule (section 4).
+Verifying by looking	"It renders, so it's done."	Done = acceptance criteria passed and recorded.
+Spec drift	Behaviour changes mid-build; documents lie.	Change control: SRS first, code second.
+"Just build it"	User skips discovery.	Reply with the smallest set of questions (≤ 3) that would make the build correct, and ask for one round of answers. Proceed only with an explicit waiver logged as assumptions.
+9. Prompt template
 
-## 9. Roadmap
-| Phase | Outcome | Depends on |
-| --- | --- | --- |
+Paste into any AI builder (Base44, Lovable, Cursor, Bolt, v0, Claude, ChatGPT) before any build request:
 
-## 10. Task list
-- [ ] T1 — <task> — satisfies FR-1 — done when <observable outcome>
-```
+ROLE: You are a senior requirements engineer. You do not write code in this session.
+GOAL: Produce an approved SRS for: <one-sentence idea>.
+RULES:
+1. Ask at most 3 questions per round, grouped by area, each with concrete options. Wait for answers.
+2. Never invent answers. Anything you assume goes under "Assumptions" marked PENDING.
+3. Every functional requirement gets an ID (FR-n), a priority (Must/Should/Could), and Given/When/Then acceptance criteria.
+4. Every non-functional requirement (NFR-n) has a measurable target.
+5. Banned without a measurable definition: fast, simple, modern, clean, user-friendly, secure, scalable, manage, handle, support, etc.
+6. Include: scope, out of scope, roles (can / cannot), platforms, data model, user flows incl. error and empty paths, edge cases, open questions, roadmap, task list, traceability matrix.
+7. When the SRS is complete, print it and STOP. Do not generate code until I reply "APPROVED v1.0".
+CONTEXT I ALREADY HAVE: <paste notes, constraints, platform, interface direction>
 
-Present the SRS and stop. Wait for explicit approval before phase one.
+10. Traceability to the SRS
 
-## Exit criteria
+This skill creates the IDs every other skill uses:
 
-You may start building only when every line below is true:
+FR-n → functional requirement · NFR-n → non-functional · T-n → task · TC-n → test case.
+Rule: every commit, build prompt, or AI edit request cites at least one FR or NFR ID. A change without an ID is a change request — update the SRS first.
+11. Definition of done
 
-- [ ] Every user role and what it may and may not do is written down.
-- [ ] Every functional requirement has a number and an acceptance criterion.
-- [ ] The data model names every entity, its fields, and who owns it.
-- [ ] The out-of-scope list is explicit — silence is not scope.
-- [ ] Every open question is either answered or logged as an assumption the human confirmed.
-- [ ] The roadmap and task list exist, and the human approved them.
+The gate is passed when the completeness checklist is 100 % ticked, blocking open questions are zero, and the user has approved a specific SRS version. Building may start only then; the project is done only when every Must-priority FR in the traceability matrix shows Verified (implemented) and Validated (works as intended).
 
-## Anti-patterns
+Related skills
 
-- **Building to look impressive.** Generating a dashboard nobody asked for instead of asking what the user does daily.
-- **Silent assumptions.** "I assumed prices are in USD" written nowhere, discovered in production.
-- **Scope by omission.** Never stating what is out of scope, so everything is implicitly expected.
-- **Requirements as vibes.** "Users can manage their profile" — with no fields, no roles, no rules.
-- **Verifying by looking.** Calling a feature done because a screen renders, not because an acceptance criterion was checked.
-- **Spec drift.** Changing behaviour mid-build without updating the SRS, so the documents lie.
+Next: SK-02 Project Foundations & Architecture → SK-03 Complete App Blueprint → SK-06 Functional Prototype First. Use the SRS Architect in this hub to run this skill interactively.
 
-> If the human says "just build it", reply with the smallest set of questions that would make the build correct, and ask for one round of answers.
+RELATED LEARNING
+
+Vibe Coding & AI-Assisted Development
+
+28 MIN READ
+
+Ready to hand this to your AI?
+
+Copy the skill, drop it into your project, and require the AI to read it before the first prompt.
+
+COPY SKILL
+DOWNLOAD .MD
